@@ -7,15 +7,10 @@ import com.example.loggintp3.repositorios.BandasRepository
 //adicionar ao manifesto dentro da tag application:
 //android:name=".application.BandasApplication"
 
-class BandasApplication: Application() {
+class BandasApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BandasRepository.inicializar()
+        BandasRepository.initializer()
     }
-
-    fun login(email: String, password: String){
-
-    }
-
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746568474870",
+    "project_id": "loggintp3",
+    "storage_bucket": "loggintp3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746568474870:android:5be46ebf44498950e98cd7",
+        "android_client_info": {
+          "package_name": "com.example.loggintp3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746568474870-q9gjqhnl5qfi312m4qeombtpq2ok0pdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl6UY_Pww-nYg0LEnPBCnkDmcJDekw4Og"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746568474870-q9gjqhnl5qfi312m4qeombtpq2ok0pdl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

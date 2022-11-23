@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.loggintp3.databinding.ActivityLoginBinding
 import com.example.loggintp3.databinding.ActivityRegistrarBinding
+import com.example.loggintp3.repositorios.BandasRepository
 
 class RegistrarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrarBinding
+
+    private lateinit var repository: BandasRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,16 +24,21 @@ class RegistrarActivity : AppCompatActivity() {
 
     private fun setup() {
         setupClickListeners()
+        repository = BandasRepository.get()
     }
 
     private fun setupClickListeners() {
         binding.btnRegistrar.setOnClickListener {
-            cadastrarClick()
+            noClickCadastrar()
         }
     }
 
-    private fun cadastrarClick() {
-
+    private fun noClickCadastrar() {
+        repository.cadastrarUsuarioComSenha(
+                binding.inputEmailRegistrar.text.toString(),
+                binding.inputPasswordRegistrar.text.toString(),
+                this
+        )
     }
 
     fun validarSenha(senha: String): Boolean {
@@ -38,13 +46,8 @@ class RegistrarActivity : AppCompatActivity() {
 
     }
 
-    fun iniciarMain(){
+    fun iniciarMain() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-    }
-
-    fun estaLogado(){
-        //se ja estiver logado vai direto pra main
-
     }
 }
