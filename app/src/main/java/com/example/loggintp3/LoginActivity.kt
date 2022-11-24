@@ -3,8 +3,11 @@ package com.example.loggintp3
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import com.example.loggintp3.databinding.ActivityLoginBinding
 import com.example.loggintp3.repositorios.BandasRepository
+import com.example.loggintp3.repositorios.TAG
 
 class LoginActivity : AppCompatActivity() {
 
@@ -55,8 +58,21 @@ class LoginActivity : AppCompatActivity() {
         repository.login(
             binding.inputEmail.text.toString(),
             binding.inputPassword.text.toString(),
-            this
         )
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "Login com sucesso")
+                    iniciarMainActivity()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        this, "Autenticação falhou.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
 
     }
 }

@@ -3,9 +3,12 @@ package com.example.loggintp3
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import com.example.loggintp3.databinding.ActivityLoginBinding
 import com.example.loggintp3.databinding.ActivityRegistrarBinding
 import com.example.loggintp3.repositorios.BandasRepository
+import com.example.loggintp3.repositorios.TAG
 
 class RegistrarActivity : AppCompatActivity() {
 
@@ -35,10 +38,23 @@ class RegistrarActivity : AppCompatActivity() {
 
     private fun noClickCadastrar() {
         repository.cadastrarUsuarioComSenha(
-                binding.inputEmailRegistrar.text.toString(),
-                binding.inputPasswordRegistrar.text.toString(),
-                this
+            binding.inputEmailRegistrar.text.toString(),
+            binding.inputPasswordRegistrar.text.toString(),
         )
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "Cadastrado com sucesso.")
+                    iniciarMain()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        this, "Cadastro falhou.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     fun validarSenha(senha: String): Boolean {
