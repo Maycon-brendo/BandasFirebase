@@ -1,11 +1,11 @@
-package com.example.loggintp3
+package com.example.loggintp3.login.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.loggintp3.databinding.ActivityLoginBinding
+import com.example.loggintp3.main.ui.MainActivity
 import com.example.loggintp3.databinding.ActivityRegistrarBinding
 import com.example.loggintp3.repositorios.BandasRepository
 import com.example.loggintp3.repositorios.TAG

@@ -12,6 +12,11 @@
         <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/activity_registrar.xml" value="0.2898550724637681" />
+        <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/bandalist_item.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/fragment_bandas.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/fragment_cadastrar_banda.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/fragment_editar_banda.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/Maycon/AndroidStudioProjects/loggintp3/app/src/main/res/layout/fragment_home.xml" value="0.32518115942028986" />
       </map>
     </option>
   </component>

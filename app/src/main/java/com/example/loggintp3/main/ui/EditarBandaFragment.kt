@@ -1,4 +1,4 @@
-package com.example.loggintp3.fragments
+package com.example.loggintp3.main.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.loggintp3.R
-import com.example.loggintp3.databinding.FragmentBandasBinding
+import com.example.loggintp3.databinding.FragmentCadastrarBandaBinding
+import com.example.loggintp3.databinding.FragmentEditarBandaBinding
 
-class BandasFragment : Fragment() {
+class EditarBandaFragment : Fragment() {
 
-    private var _binding: FragmentBandasBinding? = null
+    private var _binding: FragmentEditarBandaBinding? = null
 
     private val binding get() = _binding!!
 
@@ -19,7 +20,7 @@ class BandasFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentBandasBinding.inflate(inflater, container, false)
+        _binding = FragmentEditarBandaBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }

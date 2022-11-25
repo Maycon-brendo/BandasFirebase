@@ -3,12 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.EditarBandaFragment">
+    tools:context=".main.ui.EditarBandaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_editar_nome_banda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Editar nome da banda" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_editar_genero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Editar genero musical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_editar_ano"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Editar ano da formação" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_cadastrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar" />
+
+
+    </LinearLayout>
 
 </FrameLayout>

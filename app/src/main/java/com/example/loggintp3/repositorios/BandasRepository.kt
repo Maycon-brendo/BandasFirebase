@@ -3,10 +3,16 @@ package com.example.loggintp3.repositorios
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.loggintp3.models.Banda
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.IllegalStateException
 
@@ -21,13 +27,24 @@ class BandasRepository private constructor() {
 
 
     companion object {
+
+
         private lateinit var auth: FirebaseAuth
+
+        private lateinit var db: FirebaseFirestore
+
+
+        lateinit var colecaoBandas : CollectionReference
+
+
         private var INSTACE: BandasRepository? = null
         fun initializer() {
             if (INSTACE == null) {
                 INSTACE = BandasRepository()
             }
             auth = Firebase.auth
+            db = Firebase.firestore
+            colecaoBandas = db.collection("bandas")
         }
 
         fun get(): BandasRepository {
@@ -59,5 +76,23 @@ class BandasRepository private constructor() {
 
     fun logout() {
         Firebase.auth.signOut()
+    }
+
+    fun cadastrarBanda(banda: Banda): Task<DocumentReference>{
+        return colecaoBandas.add(banda)
+    }
+
+    fun pegarBandas(): Task<QuerySnapshot> {
+        return colecaoBandas.get()
+    }
+
+    fun deleteBanda(id: String) {
+        colecaoBandas.document(id).delete()
+    }
+
+    fun atualizaBanda(id: String?, banda: Banda) {
+        if (id != null) {
+            colecaoBandas.document(id).set(banda)
+        }
     }
 }

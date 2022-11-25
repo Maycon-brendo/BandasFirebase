@@ -1,10 +1,10 @@
-package com.example.loggintp3
+package com.example.loggintp3.main.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.loggintp3.databinding.ActivityLoginBinding
 import com.example.loggintp3.databinding.ActivityMainBinding
+import com.example.loggintp3.login.ui.LoginActivity
 import com.example.loggintp3.repositorios.BandasRepository
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupclickListener() {
-        binding.button.setOnClickListener{
+        binding.btnSair.setOnClickListener{
             repository.logout()
             iniciarLoginActivity()
         }
