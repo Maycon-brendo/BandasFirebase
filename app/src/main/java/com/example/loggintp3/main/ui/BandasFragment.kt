@@ -56,12 +56,6 @@ class BandasFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    fun pegarBandas(){
-        val lista = viewModel.pegarBandas()
-        toast("Tamanho da lista ${lista.size}")
-    }
-
     val adapter = BandaComIdAdapter(
         object : BandaComIdListener {
             override fun onEditClick(banda: BandaComId) {

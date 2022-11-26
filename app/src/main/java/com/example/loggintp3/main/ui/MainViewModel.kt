@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.loggintp3.models.Banda
 import com.example.loggintp3.models.BandaComId
 import com.example.loggintp3.repositorios.BandasRepository
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.toObject
 
 class MainViewModel: ViewModel() {
@@ -16,23 +19,140 @@ class MainViewModel: ViewModel() {
 
     val repository = BandasRepository.get()
 
-    fun pegarBandas(): List<Banda> {
-        val lista = mutableListOf<Banda>()
-        repository.pegarBandas()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val banda = document.toObject<Banda>()
-                    lista.add(banda)
-                    Log.i(TAG, "document: ${document}")
-                    Log.i(TAG, "banda: ${banda}")
-                }
-                setTurmas(lista)
-            }
-            .addOnFailureListener { exception ->
 
-            }
-        return lista
+
+    fun cadastrarBanda(banda: Banda): Task<DocumentReference> {
+        return repository.cadastrarBanda(banda)
     }
+
+    // Ouvir vários documentos em uma coleção
+    // https://firebase.google.com/docs/firestore/query-data/listen?hl=pt&authuser=0#listen_to_multiple_documents_in_a_collection
+    fun observeColecaoBandas() {
+
+        repository.getBandasColecao()
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    Log.w(TAG, "listen:error", e)
+                    return@addSnapshotListener
+                }
+
+                val listaInput = mutableListOf<BandaComId>()
+
+                val listaRemocao = mutableListOf<String>()
+
+                val listaModificacao = mutableListOf<BandaComId>()
+
+                // Ver alterações entre instantâneos
+                // https://firebase.google.com/docs/firestore/query-data/listen?hl=pt&authuser=0#view_changes_between_snapshots
+                for (dc in snapshots!!.documentChanges) {
+                    when (dc.type) {
+
+                        // Documento adicionado
+                        DocumentChange.Type.ADDED -> {
+
+                            val banda = dc.document.toObject<Banda>()
+                            val id = dc.document.id
+                            val bandaComId = bandaToBandaComId(banda, id)
+
+                            Log.i(TAG, "bandaComId: ${bandaComId}")
+                            listaInput.add(bandaComId)
+
+                        }
+
+                        // Documento modificado
+                        DocumentChange.Type.MODIFIED -> {
+                            val banda = dc.document.toObject<Banda>()
+                            val id = dc.document.id
+                            val bandaComId = bandaToBandaComId(banda, id)
+
+                            Log.i(TAG, "Modificacao - bandaComId: ${bandaComId}")
+                            listaModificacao.add(bandaComId)
+                        }
+
+                        // Documento removido
+                        DocumentChange.Type.REMOVED -> {
+                            val id = dc.document.id
+                            Log.i(TAG, "id removido: ${id}")
+                            listaRemocao.add(dc.document.id)
+
+                        }
+                    }
+                }
+
+                addListaToBandasComId(listaInput)
+                removeFromBandasComId(listaRemocao)
+                modifyInBandasComId(listaModificacao)
+            }
+    }
+
+    fun modifyItemInListaBandasComId(itemModificado: BandaComId) {
+        val listaAntiga = bandasComId.value
+        val listaNova = mutableListOf<BandaComId>()
+
+        listaAntiga?.forEach { itemDaLista ->
+            if (itemModificado.id == itemDaLista.id) {
+                listaNova.add(itemModificado)
+            } else {
+                listaNova.add(itemDaLista)
+            }
+        }
+        setBandasComId(listaNova)
+    }
+
+    private fun modifyInBandasComId(listaModificacao: List<BandaComId>) {
+        Log.i(TAG, "listaModificacao: ${listaModificacao}")
+        if (listaModificacao.isNotEmpty()) {
+            for (itemModificado in listaModificacao) {
+                modifyItemInListaBandasComId(itemModificado)
+            }
+        }
+    }
+
+    private fun removeFromBandasComId(listaRemocao: List<String>) {
+
+        val listaAntiga = bandasComId.value
+
+        val listaNova = mutableListOf<BandaComId>()
+
+        Log.i(TAG, "listaRemocao: ${listaRemocao}")
+
+        if (listaRemocao.isNotEmpty()) {
+            listaAntiga?.forEach {
+                Log.i(TAG, "item da lista Antiga: ${it.id}")
+                if (it.id in listaRemocao) {
+                    Log.i(TAG, "item ${it.id} está dentro da listaRemocao")
+
+                    //listaNova.add(it)
+                } else {
+                    Log.i(TAG, "item ${it.id} _NÃO_ está dentro da listaRemocao")
+
+                    listaNova.add(it)
+                }
+            }
+            setBandasComId(listaNova)
+        }
+
+
+    }
+
+    fun addListaToBandasComId(listaInput: List<BandaComId>) {
+        val listaAntiga = bandasComId.value
+
+        val listaNova = mutableListOf<BandaComId>()
+
+        listaAntiga?.forEach {
+            listaNova.add(it)
+        }
+
+        listaInput.forEach {
+            listaNova.add(it)
+        }
+
+        setBandasComId(listaNova)
+
+
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Bandas //////////////////////////////////////////////////////////////////////////////////////
@@ -70,5 +190,10 @@ class MainViewModel: ViewModel() {
     fun atualizaBanda(banda: Banda) {
         repository.atualizaBanda(selectedBandaComId.value?.id, banda)
     }
+
+    init {
+        observeColecaoBandas()
+    }
+
 
 }

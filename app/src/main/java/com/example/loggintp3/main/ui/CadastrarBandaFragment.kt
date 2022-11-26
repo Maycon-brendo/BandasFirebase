@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.loggintp3.databinding.FragmentCadastrarBandaBinding
 import com.example.loggintp3.models.Banda
 import com.example.loggintp3.repositorios.BandasRepository
+import com.example.loggintp3.utils.navup
 import com.example.loggintp3.utils.toast
 
 class CadastrarBandaFragment : Fragment() {
@@ -47,6 +48,7 @@ class CadastrarBandaFragment : Fragment() {
         repository.cadastrarBanda(banda)
             .addOnSuccessListener { documentReference ->
                 toast("Sucesso no cadatro com id : ${documentReference.id}")
+                navup()
             }
             .addOnFailureListener { e ->
                 toast("Falha cadastro")

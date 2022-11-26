@@ -95,4 +95,7 @@ class BandasRepository private constructor() {
             colecaoBandas.document(id).set(banda)
         }
     }
+    fun getBandasColecao(): CollectionReference {
+        return colecaoBandas
+    }
 }
